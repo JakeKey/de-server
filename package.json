@@ -1,0 +1,24 @@
+{
+  "name": "de-server",
+  "version": "1.0.0",
+  "description": "Diet Editor API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JakeKey/de-server.git"
+  },
+  "author": "Jakub Kozlowski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JakeKey/de-server/issues"
+  },
+  "homepage": "https://github.com/JakeKey/de-server#readme",
+  "dependencies": {
+    "@hapi/joi": "^16.1.8",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.12"
+  }
+}
