@@ -1,0 +1,6 @@
+{
+    "db": {
+        "host": "de_db_hostname",
+        "password": "de_db_password"
+    }
+}
