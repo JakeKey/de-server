@@ -21,9 +21,9 @@ router.post('/', async (req, res) => {
   //let product = new Product({ ...req.body });
  // product = await product.save();
 
-  let meal = new Meal({...req.body , products: productsWithQuantities});
+  const meal = new Meal({...req.body , products: productsWithQuantities});
 
-  meal = await meal.save();
+  await meal.save();
 
 	res.send(meal);
 });

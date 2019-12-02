@@ -1,25 +1,36 @@
 const Joi = require('@hapi/joi');
 const mongoose = require('mongoose');
 
-const User = mongoose.model('User', new mongoose.Schema({
-  name: { 
+const User = mongoose.model('Users', new mongoose.Schema({
+  username: { 
     type: String, 
     required: true,
     minlength: 3,
     maxlength: 30,
     trim: true,
+    unique: true,
     match: /^[a-z0-9]+$/i
   },
-  isAdmin: Boolean
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+    maxlength: 1024
+  },
+  /*isAdmin: {
+    type: Boolean,
+    default: false
+  }*/
 }));
 
-function validate(user) {
-  const schema = {
-    name: Joi.string().alphanum().min(3).max(30).required()
-  }
+function validateUser(user) {
+  const schema = Joi.object({
+    username: Joi.string().alphanum().min(3).max(30).required(),
+    password: Joi.string().min(8).max(1024).required()
+  });
 
-  return Joi.validate(user, schema)
+  return schema.validate(user);
 }
 
-module.exports = User;
-module.exports = validate;
+exports.User = User;
+exports.validate = validateUser;

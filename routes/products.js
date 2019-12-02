@@ -19,8 +19,8 @@ router.post('/', async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   
-  let product = new Product({ ...req.body });
-  product = await product.save();
+  const product = new Product({ ...req.body });
+  await product.save();
 
 	res.send(product);
 });

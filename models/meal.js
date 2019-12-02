@@ -48,7 +48,7 @@ function validateMeal(meal) {
     createdAt: Joi.date(),
     products: Joi.array().items(
       Joi.object({
-        productId: Joi.string().required(),
+        productId: Joi.objectId().required(),
         quantity: Joi.number().min(1).max(2000).required()
       })
     ).required()

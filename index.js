@@ -1,8 +1,11 @@
+const Joi = require('@hapi/joi');
+Joi.objectId = require('joi-objectid')(Joi);
 const debug = require('debug')('de:startup');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const config = require('config');
 const mongoose = require('mongoose');
+const users = require('./routes/users');
 const products = require('./routes/products');
 const meals = require('./routes/meals');
 const express = require('express');
@@ -19,6 +22,7 @@ mongoose.connect(config.get('db.host'), {useUnifiedTopology: true, useNewUrlPars
   .catch(err => debug('Not connected: '+err));
 
 app.use(express.json());
+app.use('/api/users', users);
 app.use('/api/products', products);
 app.use('/api/meals', meals);
 
