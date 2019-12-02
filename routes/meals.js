@@ -1,11 +1,13 @@
+const auth = require('../middleware/auth');
 const debug = require('debug')('de:meals');
 const {Meal, validate} = require('../models/meal');
 const {Product} = require('../models/product');
 const express = require('express');
 const router = express.Router();
 
+router.use(auth);
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   const reqProductsIds = req.body.products.map(prod => prod.productId );

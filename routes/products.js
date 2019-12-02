@@ -1,7 +1,10 @@
+const auth = require('../middleware/auth');
 const debug = require('debug')('de:products');
 const {Product, validate} = require('../models/product');
 const express = require('express');
 const router = express.Router();
+
+router.use(auth);
 
 router.get('/', async (req, res) => {
   const products = await Product.find();

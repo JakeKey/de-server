@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const Joi = require('@hapi/joi');
 const bcrypt = require('bcrypt');
 const express = require('express');
-const config = require('config');
 const router = express.Router();
 const {User} = require('../models/user');
 
@@ -19,6 +18,7 @@ router.post('/', async (req, res) => {
   const token = user.generateAuthToken();
 	res.send(token);
 });
+
 function validate(user) {
   const schema = Joi.object({
     username: Joi.string().alphanum().min(3).max(30).required(),
