@@ -1,6 +1,8 @@
 {
     "db": {
-        "host": "de_db_hostname",
-        "password": "de_db_password"
-    }
+        "host": "DE_DB_HOSTNAME"
+    },
+    "jwt": {
+        "privateKey": "DE_JWT_PRIVATEKEY"
+    } 
 }

@@ -5,12 +5,18 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const config = require('config');
 const mongoose = require('mongoose');
+const auth = require('./routes/auth');
 const users = require('./routes/users');
 const products = require('./routes/products');
 const meals = require('./routes/meals');
 const express = require('express');
 const app = express();
 app.use(helmet());
+
+if(!config.get('jwt.privateKey') || !config.get('db.host')) {
+  debug('Enviromental variables not defined!');
+  process.exit(1);
+}
 
 if(app.get('env') === 'development') {
   app.use(morgan('dev'));
@@ -22,6 +28,7 @@ mongoose.connect(config.get('db.host'), {useUnifiedTopology: true, useNewUrlPars
   .catch(err => debug('Not connected: '+err));
 
 app.use(express.json());
+app.use('/api/auth', auth);
 app.use('/api/users', users);
 app.use('/api/products', products);
 app.use('/api/meals', meals);
