@@ -10,8 +10,10 @@ const users = require('./routes/users');
 const products = require('./routes/products');
 const meals = require('./routes/meals');
 const express = require('express');
+var cors = require('cors');
 const app = express();
 app.use(helmet());
+app.use(cors({"exposedHeaders": ['x-auth-token']}));
 
 if(!config.get('jwt.privateKey') || !config.get('db.host')) {
   debug('Enviromental variables not defined!');

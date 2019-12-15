@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
 
 	await user.save();
 	const token = user.generateAuthToken();
-	res.header('x-auth-token', token).send({_id: user._id, username: user.username});
+	res.header('x-auth-token', token).send({id: user._id, username: user.username});
 });
 
 
