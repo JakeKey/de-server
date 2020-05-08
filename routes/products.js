@@ -11,8 +11,13 @@ const router = express.Router();
 router.use(auth);
 
 router.get("/", auth, async (req, res) => {
-  const products = await Product.find();
-  res.send(products);
+  if (req.query.category) {
+    const products = await Product.find({ category: req.query.category });
+    res.send(products);
+  } else {
+    const products = await Product.find();
+    res.send(products);
+  }
 });
 
 router.get("/categories", auth, async (req, res) => {
