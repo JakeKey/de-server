@@ -24,50 +24,50 @@ const productSchema = new mongoose.Schema({
     ],
   },
   nutrients: {
-    type: {
-      proteins: {
-        type: Number,
-        max: 100,
-        default: 0,
-      },
-      carbohydrates: {
-        type: Number,
-        max: 100,
-        default: 0,
-      },
-      fat: {
-        type: Number,
-        max: 100,
-        default: 0,
-      },
-      saturatedFat: {
-        type: Number,
-        max: 100,
-        default: 0,
-      },
-      omega3: {
-        type: Number,
-        max: 100,
-        default: 0,
-      },
-      omega6: {
-        type: Number,
-        max: 100,
-        default: 0,
-      },
-      salt: {
-        type: Number,
-        max: 100,
-        default: 0,
-      },
-      sugar: {
-        type: Number,
-        max: 100,
-        default: 0,
-      },
-      energy: Number,
+    proteins: {
+      type: Number,
+      max: 100,
+      default: 0,
     },
-    required: true,
+    carbohydrates: {
+      type: Number,
+      max: 100,
+      default: 0,
+    },
+    fat: {
+      type: Number,
+      max: 100,
+      default: 0,
+    },
+    saturatedFat: {
+      type: Number,
+      max: 100,
+      default: 0,
+    },
+    omega3: {
+      type: Number,
+      max: 100,
+      default: 0,
+    },
+    omega6: {
+      type: Number,
+      max: 100,
+      default: 0,
+    },
+    salt: {
+      type: Number,
+      max: 100,
+      default: 0,
+    },
+    sugar: {
+      type: Number,
+      max: 100,
+      default: 0,
+    },
+    energy: {
+      type: Number,
+      default: 0,
+    },
   },
 });
 
@@ -87,7 +87,7 @@ function validateProduct(product) {
       salt: Joi.number().min(0).max(100),
       sugar: Joi.number().min(0).max(100),
       energy: Joi.number().min(0),
-    }),
+    }).required(),
   });
 
   return schema.validate(product);

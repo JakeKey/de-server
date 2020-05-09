@@ -36,11 +36,13 @@ router.get("/:id", objectId, async (req, res) => {
   res.send(product);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", admin, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const product = new Product({ ...req.body });
+  const product = new Product({
+    ...req.body,
+  });
   await product.save();
 
   res.send(product);
