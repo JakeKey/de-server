@@ -11,6 +11,13 @@ const router = express.Router();
 
 router.use(auth);
 
+router.get("/", async (req, res) => {
+  const meals = await Meal.find({ ownerId: req.user._id });
+
+  if (!meals) return res.status(204).send();
+  res.status(200).send(meals);
+});
+
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
