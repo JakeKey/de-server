@@ -12,10 +12,25 @@ const router = express.Router();
 router.use(auth);
 
 router.get("/", async (req, res) => {
-  const meals = await Meal.find({ ownerId: req.user._id });
+  if (req.query.category) {
+    const meals = await Meal.find({
+      ownerId: req.user._id,
+      category: req.query.category,
+    });
+    if (!meals) return res.status(204).send({ code: "MEALS_NOT_FOUND" });
+    res.status(200).send(meals);
+  } else {
+    const meals = await Meal.find({ ownerId: req.user._id });
+    if (!meals) return res.status(204).send({ code: "MEALS_NOT_FOUND" });
+    res.status(200).send(meals);
+  }
+});
 
-  if (!meals) return res.status(204).send();
-  res.status(200).send(meals);
+router.get("/categories", async (req, res) => {
+  const mealCategories = await Meal.find({ ownerId: req.user._id }).distinct(
+    "category"
+  );
+  res.status(200).send(mealCategories);
 });
 
 router.post("/", async (req, res) => {
@@ -30,7 +45,7 @@ router.post("/", async (req, res) => {
   debug("products in meal", products);
 
   if (products.length !== req.body.products.length)
-    return res.status(400).send("Invalid product id");
+    return res.status(400).send({ code: "INVALID_PRODUCT" });
 
   const productsWithQuantities = req.body.products
     .sort()

@@ -13,6 +13,7 @@ const auth = require("./routes/auth");
 const users = require("./routes/users");
 const products = require("./routes/products");
 const meals = require("./routes/meals");
+const diets = require("./routes/diets");
 
 const error = require("./middleware/error.js");
 
@@ -43,6 +44,7 @@ app.use("/api/auth", auth);
 app.use("/api/users", users);
 app.use("/api/products", products);
 app.use("/api/meals", meals);
+app.use("/api/diets", diets);
 
 app.use(error);
 

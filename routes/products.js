@@ -13,27 +13,27 @@ router.use(auth);
 router.get("/", async (req, res) => {
   if (req.query.category) {
     const products = await Product.find({ category: req.query.category });
-    res.send(products);
+    if (!products) return res.status(204).send({ code: "PRODUCTS_NOT_FOUND" });
+    res.status(200).send(products);
   } else {
     const products = await Product.find();
-    res.send(products);
+    if (!products) return res.status(204).send({ code: "PRODUCTS_NOT_FOUND" });
+    res.status(200).send(products);
   }
 });
 
 router.get("/categories", async (req, res) => {
-  try {
-    const productCategories = await Product.find().distinct("category");
-    res.send(productCategories);
-  } catch (ex) {
-    res.status(500).send("Something went wrong");
-  }
+  const productCategories = await Product.find().distinct("category");
+  if (!productCategories)
+    return res.status(204).send({ code: "CATEGORIES_NOT_FOUND" });
+  res.status(200).send(productCategories);
 });
 
 router.get("/:id", objectId, async (req, res) => {
   const product = await Product.findById(req.params.id);
   if (!product) return res.status(404).send("Product not found.");
 
-  res.send(product);
+  res.status(200).send(product);
 });
 
 router.post("/", admin, async (req, res) => {
@@ -45,7 +45,7 @@ router.post("/", admin, async (req, res) => {
   });
   await product.save();
 
-  res.send(product);
+  res.status(201).send(product);
 });
 
 router.put("/:id", [admin, objectId], async (req, res) => {
@@ -60,7 +60,7 @@ router.put("/:id", [admin, objectId], async (req, res) => {
 
   if (!product) return res.status(404).send("Product not found.");
 
-  res.send(product);
+  res.status(204).send(product);
 });
 
 router.delete("/:id", [admin, objectId], async (req, res) => {
@@ -68,7 +68,7 @@ router.delete("/:id", [admin, objectId], async (req, res) => {
 
   if (!product) return res.status(404).send("Product not found.");
 
-  res.send(product);
+  res.status(204).send(product);
 });
 
 module.exports = router;
