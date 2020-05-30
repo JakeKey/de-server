@@ -38,6 +38,7 @@ mongoose
   })
   .then(() => debug("Connected..."))
   .catch((err) => debug("Not connected: " + err));
+mongoose.set("useCreateIndex", true);
 
 app.use(express.json());
 app.use("/api/auth", auth);
