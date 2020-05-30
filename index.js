@@ -21,7 +21,11 @@ const app = express();
 app.use(helmet());
 app.use(cors({ exposedHeaders: ["x-auth-token"] }));
 
-if (!config.get("jwt.privateKey") || !config.get("db.host")) {
+if (
+  !config.get("jwt.privateKey") ||
+  !config.get("db.host") ||
+  !config.get("google.recaptchaSecret")
+) {
   debug("Enviromental variables not defined!");
   process.exit(1);
 }

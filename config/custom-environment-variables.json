@@ -1,8 +1,11 @@
 {
-    "db": {
-        "host": "DE_DB_HOSTNAME"
-    },
-    "jwt": {
-        "privateKey": "DE_JWT_PRIVATEKEY"
-    } 
+  "db": {
+    "host": "DE_DB_HOSTNAME"
+  },
+  "jwt": {
+    "privateKey": "DE_JWT_PRIVATEKEY"
+  },
+  "google": {
+    "recaptchaSecret": "DE_GOOG_RECAPTCHA_SECRET"
+  }
 }
