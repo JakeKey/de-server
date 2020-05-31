@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+var fs = require("fs");
+var https = require("https");
 const debug = require("debug")("de:startup");
 const helmet = require("helmet");
 const morgan = require("morgan");
@@ -54,4 +56,13 @@ app.use("/api/diets", diets);
 app.use(error);
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => debug(`Listening on port ${port}...`));
+
+https
+  .createServer(
+    {
+      key: fs.readFileSync("server.key"),
+      cert: fs.readFileSync("server.cert"),
+    },
+    app
+  )
+  .listen(port, () => debug(`Listening on port ${port}...`));
