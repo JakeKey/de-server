@@ -57,12 +57,16 @@ app.use(error);
 
 const port = process.env.PORT || 3000;
 
-https
-  .createServer(
-    {
-      key: fs.readFileSync("server.key"),
-      cert: fs.readFileSync("server.cert"),
-    },
-    app
-  )
-  .listen(port, () => debug(`Listening on port ${port}...`));
+if (app.get("env") === "production") {
+  https
+    .createServer(
+      {
+        key: fs.readFileSync("server.key"),
+        cert: fs.readFileSync("server.cert"),
+      },
+      app
+    )
+    .listen(port, () => debug(`Listening on port ${port}...`));
+} else {
+  app.listen(port, () => debug(`Listening on port ${port}...`));
+}
